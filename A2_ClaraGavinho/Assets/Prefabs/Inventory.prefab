@@ -995,6 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 1134302440891407083, guid: 566e7d28a588ea24e8a41500a9739e02, type: 3}
+  _itemDescription: {fileID: 5467505092253203885}
   _contentPanel: {fileID: 3386184457286147236}
 --- !u!1 &6189191271243299709
 GameObject:
@@ -1367,8 +1368,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2602995889450842564}
   m_HandleRect: {fileID: 252763876046743057}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1386,6 +1387,7 @@ GameObject:
   - component: {fileID: 5753750893242425183}
   - component: {fileID: 7568122601192485249}
   - component: {fileID: 8691029267890729657}
+  - component: {fileID: 5467505092253203885}
   m_Layer: 5
   m_Name: INVDescription
   m_TagString: Untagged
@@ -1498,6 +1500,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5467505092253203885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8695080122722559791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ed73337bb9a954fa3470d7eb1d31a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemImg: {fileID: 750014358437477663}
+  _title: {fileID: 1285646558445723898}
+  _description: {fileID: 2339161430864459712}
 --- !u!1 &8851866735863190928
 GameObject:
   m_ObjectHideFlags: 0

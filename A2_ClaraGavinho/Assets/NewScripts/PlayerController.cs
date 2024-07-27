@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Instance;
+
     [SerializeField]
     private float _moveSpeed = 5f; //player speed
     [SerializeField]
-    private float _gravity = -20f; //how strong is gravity when we jump
+    private float _gravity = -10f; //how strong is gravity when we jump
     [SerializeField]
     private float _rotationSpeed = 90f; //how quickly the player will turn
     [SerializeField]
@@ -16,12 +20,19 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
+    public int health;
+    public TextMeshProUGUI healthText;
+
     Vector3 moveVelocity; //forward velocity
     Vector3 turnVelocity; //rotate velocity
     Vector3 direction; //the direction we will go
 
     private CharacterController _controller;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -52,5 +63,10 @@ public class PlayerController : MonoBehaviour
 
         _controller.Move(moveVelocity * Time.deltaTime); //move the player regulated by constant time
         transform.Rotate(turnVelocity * Time.deltaTime); //turn the player regulated by constant time
+    }
+    public void IncreaseHealth(int value)
+    {
+        health += value;
+        healthText.text = $"HP:{health}";
     }
 }

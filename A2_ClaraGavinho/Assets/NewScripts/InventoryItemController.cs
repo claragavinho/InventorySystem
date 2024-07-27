@@ -9,6 +9,9 @@ public class InventoryItemController : MonoBehaviour
 
     public Button removeButton;
 
+    [SerializeField]
+    public GameObject door;
+
     public void RemoveItem()
     {
         InventoryManager.Instance.Remove(item);
@@ -18,17 +21,5 @@ public class InventoryItemController : MonoBehaviour
     public void AddItem(Item newItem)
     {
         item = newItem;
-    }
-    public void UseItem()
-    {
-        switch (item.itemType) 
-        {
-            case Item.ItemType.Potion:
-                PlayerController.Instance.IncreaseHealth(item.itemValue);
-                break;
-            case Item.ItemType.Key:
-                break;
-        }
-        RemoveItem();
     }
 }

@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float _moveSpeed = 5f; //player speed
     [SerializeField]
-    private float _gravity = -20f; //how strong is gravity when we jump
+    private float _gravity = -10f; //how strong is gravity when we jump
     [SerializeField]
     private float _rotationSpeed = 90f; //how quickly the player will turn
     [SerializeField]

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item/Create New Item")]
-public class Item : ScriptableObject
+public class Item : ScriptableObject, IUsable
 {
     public int id;
     public string itemName;
@@ -11,6 +12,12 @@ public class Item : ScriptableObject
     public Sprite itemIcon;
     public int itemValue;
     public ItemType itemType;
+
+    public UnityEvent OnUse;
+    public void UseItem()
+    {
+        OnUse?.Invoke();
+    }
 
     public enum ItemType
     {

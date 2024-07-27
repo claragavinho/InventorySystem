@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryItemUI : MonoBehaviour
+public class InventoryItemUI : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
     private Image _itemImg;
@@ -17,7 +17,7 @@ public class InventoryItemUI : MonoBehaviour
     [SerializeField]
     private Image _borderImg;
 
-    public event Action<InventoryItemUI> OnItemClicked, OnItemUsed, OnItemBeginDrag, OnItemEndDrag, OnRightMouseClick;
+    public event Action<InventoryItemUI> OnItemClicked, OnItemUsed, OnRightMouseClick;
 
     private bool empty = true;
 
@@ -46,26 +46,23 @@ public class InventoryItemUI : MonoBehaviour
     {
         _borderImg.enabled = true;
     }
-    public void OnBeginDrag()
-    {
-        if (empty)
-            return;
-        OnItemBeginDrag?.Invoke(this); //item begins being used
-    }
+    //public void OnBeginDrag()
+    //{
+    //    if (empty)
+    //        return;
+    //    OnItemBeginDrag?.Invoke(this); //item begins being used
+    //}
     public void OnDrop()
     {
         OnItemUsed?.Invoke(this); //when the item was used, remove it from inventory
     }
-    public void OnEndDrag()
-    {
-        OnItemEndDrag?.Invoke(this); //resets the items if theyre dragged out of bounds
-    }
-    public void OnPointerClick(BaseEventData data) //allows the player to click on the inventory
-    {
-        if (empty)
-            return;
+    //public void OnEndDrag()
+    //{
+    //    OnItemEndDrag?.Invoke(this); //resets the items if theyre dragged out of bounds
+    //}
 
-        PointerEventData pointerData = (PointerEventData)data;
+    public void OnPointerClick(PointerEventData pointerData)//allows the player to click on the inventory
+    {
         if (pointerData.button == PointerEventData.InputButton.Right) //checks if its the right button
         {
             OnRightMouseClick?.Invoke(this);
@@ -74,5 +71,5 @@ public class InventoryItemUI : MonoBehaviour
         {
             OnItemClicked?.Invoke(this);
         }
-    }    
+    }
 }

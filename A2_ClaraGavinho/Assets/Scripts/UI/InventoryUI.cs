@@ -17,9 +17,7 @@ public class InventoryUI : MonoBehaviour
 
     List<InventoryItemUI> listUIItems = new List<InventoryItemUI>();
 
-    public Sprite sprite;
-    public int quantity;
-    public string title, description;
+    public event Action<int> OnDescriptionRequested, OnItemActionRequested;
 
     private void Awake()
     {
@@ -35,10 +33,15 @@ public class InventoryUI : MonoBehaviour
             listUIItems.Add(uiItem); // creates the items inside the inventory
 
             uiItem.OnItemClicked += HandleItemSelection;
-            uiItem.OnItemBeginDrag += HandleBeginDrag;
-            uiItem.OnItemUsed += HandleSwap;
-            uiItem.OnItemEndDrag += HandleEndDrag;
             uiItem.OnRightMouseClick += HandleShowItemActions;
+        }
+    }
+
+    public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
+    {
+        if(listUIItems.Count > itemIndex)
+        {
+            listUIItems[itemIndex].SetData(itemImage, itemQuantity);
         }
     }
 
@@ -47,33 +50,34 @@ public class InventoryUI : MonoBehaviour
         
     }
 
-    private void HandleEndDrag(InventoryItemUI uI)
-    {
-        
-    }
-
-    private void HandleSwap(InventoryItemUI uI)
-    {
-        
-    }
-
-    private void HandleBeginDrag(InventoryItemUI uI)
-    {
-        
-    }
-
     private void HandleItemSelection(InventoryItemUI uI)
     {
-        _itemDescription.SetDescription(sprite, title, description);
+        int index = listUIItems.IndexOf(uI);
+        if (index == -1)
+            return;
+        OnDescriptionRequested?.Invoke(index);
     }
 
     public void Show()
     {
         gameObject.SetActive(true); //activates the inventory
-        _itemDescription.ResetDescription();
-
-        listUIItems[0].SetData(sprite, quantity);
+        ResetSelection();
     }
+
+    private void ResetSelection()
+    {
+        _itemDescription.ResetDescription();
+        DeselectAllItems();
+    }
+
+    private void DeselectAllItems()
+    {
+        foreach (InventoryItemUI itemUI in listUIItems) 
+        { 
+            itemUI.Deselect();
+        }
+    }
+
     public void Hide() 
     { 
         gameObject.SetActive(false); //hides the inventory

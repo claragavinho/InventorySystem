@@ -16,6 +16,7 @@ public class Item : ScriptableObject, IUsable
     public UnityEvent OnUse;
     public void UseItem()
     {
+        Debug.Log("Use item");
         OnUse?.Invoke();
     }
 

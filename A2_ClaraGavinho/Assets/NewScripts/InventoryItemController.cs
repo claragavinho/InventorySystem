@@ -7,10 +7,25 @@ public class InventoryItemController : MonoBehaviour
 {
     Item item;
 
-    public Button removeButton;
+    [SerializeField]
+    private Button useItemButton;
 
     [SerializeField]
-    public GameObject door;
+    private Button removeButton;
+
+    private void OnEnable()
+    {
+        useItemButton.onClick.AddListener(OnUseItem);
+    }
+    private void OnDisable()
+    {
+        useItemButton.onClick.RemoveListener(OnUseItem);
+    }
+
+    public void OnUseItem()
+    {
+        item.UseItem();
+    }
 
     public void RemoveItem()
     {

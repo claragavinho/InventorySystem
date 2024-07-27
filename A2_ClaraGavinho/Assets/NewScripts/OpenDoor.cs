@@ -13,17 +13,13 @@ public class OpenDoor : MonoBehaviour
     [SerializeField] 
     private float duration = 2.0f;
     [SerializeField] 
-    private float angle = 90.0f;
+    private float angle = -90.0f;
 
     //public bool isOpening = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (pivot != null)
-        {
-            pivot = transform;
-        }
         itemRef.OnUse.AddListener(HandleOpenDoor);
     }
 
@@ -33,18 +29,20 @@ public class OpenDoor : MonoBehaviour
 
     }
     public void HandleOpenDoor()
-    {
-            StartCoroutine(DoorMove());
+    {  
+        StartCoroutine(DoorMove());
     }
     IEnumerator DoorMove()
     {
-        Quaternion firstRotation = pivot.rotation;
-        Quaternion rotationMove = Quaternion.Euler(pivot.eulerAngles + new Vector3(0, angle, 0));
+        //Quaternion firstRotation = pivot.rotation;
+        Quaternion rotationMove = Quaternion.Euler(pivot.localEulerAngles + new Vector3(0, angle, 0));
 
         for (float i = 0; i < duration; i += Time.deltaTime)
         {
-            pivot.rotation = Quaternion.Slerp(firstRotation, rotationMove, i / duration);
+            pivot.localRotation = Quaternion.Slerp(pivot.rotation, rotationMove, i / duration);
             yield return null;
         }
+
+        itemRef.OnUse.RemoveListener(HandleOpenDoor);
     }
 }

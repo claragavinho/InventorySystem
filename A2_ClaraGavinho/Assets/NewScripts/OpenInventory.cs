@@ -13,17 +13,30 @@ public class OpenInventory : MonoBehaviour
 
     UnityEvent UpdateList;
 
+    void Start()
+    {
+        if (UpdateList == null)
+            UpdateList = new UnityEvent();
+
+        UpdateList.AddListener(PanelInvoke);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
             panel.SetActive(!panel.activeSelf);
+
+            if (panel.activeSelf) 
+            {
+                UpdateList?.Invoke();
+            }
         }
     }
 
     public void PanelInvoke()
     {
         inventoryManager.ListItems();
-        UpdateList?.Invoke();
+        //UpdateList?.Invoke();
     }
 }

@@ -17,7 +17,12 @@ public class InventoryUI : MonoBehaviour
 
     List<InventoryItemUI> listUIItems = new List<InventoryItemUI>();
 
-    public event Action<int> OnDescriptionRequested, OnItemActionRequested;
+    InventoryItemUI uI;
+
+    public event Action<int> OnDescriptionRequested;
+
+    public event Action<InventoryUI> OnItemClicked;
+    //, OnItemUsed, OnItemRemoved, OnItemSelected;
 
     private void Awake()
     {
@@ -31,9 +36,6 @@ public class InventoryUI : MonoBehaviour
             InventoryItemUI uiItem = Instantiate(_itemPrefab, Vector3.zero, Quaternion.identity);
             uiItem.transform.SetParent(_contentPanel);
             listUIItems.Add(uiItem); // creates the items inside the inventory
-
-            uiItem.OnItemClicked += HandleItemSelection;
-            uiItem.OnRightMouseClick += HandleShowItemActions;
         }
     }
 
@@ -44,13 +46,22 @@ public class InventoryUI : MonoBehaviour
             listUIItems[itemIndex].SetData(itemImage, itemQuantity);
         }
     }
-
-    private void HandleShowItemActions(InventoryItemUI uI)
+    internal void UpdateDescription(int itemIndex, Sprite itemImage, string name, string description)
     {
-        
+        _itemDescription.SetDescription(itemImage, name, description);
+        DeselectAllItems();
+        listUIItems[itemIndex].Select();
     }
 
-    private void HandleItemSelection(InventoryItemUI uI)
+    private void HandleItemClicked()
+    {
+        int index = listUIItems.IndexOf(uI);
+        if (index == -1)
+            return;
+        OnItemClicked?.Invoke(this);
+    }
+
+    private void HandleItemSelection()
     {
         int index = listUIItems.IndexOf(uI);
         if (index == -1)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class InventorySO : MonoBehaviour
+public class InventorySO : ScriptableObject
 {
     [SerializeField]
     private List<InventoryItem> inventoryItems;
@@ -43,6 +43,11 @@ public class InventorySO : MonoBehaviour
             returnValue[i] = inventoryItems[i]; // item is referenced in the dictionary
         }
         return returnValue;
+    }
+
+    public InventoryItem GetItemAt(int itemIndex)
+    {
+        return inventoryItems[itemIndex];
     }
 }
 
